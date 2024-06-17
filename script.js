@@ -29,6 +29,7 @@ canvas.style.border = '5px solid purple';
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
+//Creating the round cursor
 let cursor = document.createElement('div');
 cursor.className = 'cursor';
 container.appendChild(cursor);
@@ -80,6 +81,7 @@ canvas.addEventListener('mouseup', () => {
     ctx.beginPath();
 });
 
+//Clear Button
 let clearBtn = document.createElement('button');
 container.appendChild(clearBtn);
 clearBtn.textContent = 'Clear';
@@ -178,3 +180,43 @@ bnw.addEventListener('click', e => {
     bnwCtx.fillRect(2*portionWidth,0,portionWidth, bnw.height);
 })
 
+//Cursor Settings
+let cursorSettings = document.createElement('div');
+cursorSettings.id = 'cursor-setting';
+container.appendChild(cursorSettings)
+
+cursorSettings.innerHTML = `Cursor Settings:`
+cursorSettings.style.width = '200px';
+cursorSettings.style.position = 'absolute';
+cursorSettings.style.color = 'grey';
+cursorSettings.style.backgroundColor = 'transparent';
+cursorSettings.style.right = '3vw';
+cursorSettings.style.top = '20vh';
+
+let slider = document.createElement('input');
+slider.id = 'slider';
+cursorSettings.appendChild(slider)
+
+slider.type = 'range';
+slider.min = '1';
+slider.max = '100';
+slider.value = '10';
+slider.style.width = '200px';
+slider.style.backgroundColor = 'white';
+slider.style.border = '2px solid black';
+slider.style.position = 'relative';
+slider.style.top = '1rem';
+
+let cursorSizeDisplay = document.createElement('p');
+cursorSizeDisplay.id = 'cursorSizeDisplay';
+cursorSizeDisplay.textContent = `Cursor Size: ${slider.value}px`;
+cursorSizeDisplay.style.fontStyle = 'italic';
+cursorSizeDisplay.style.fontSize = '14px';
+cursorSizeDisplay.style.position = 'relative';
+cursorSizeDisplay.style.top = '6px';
+cursorSettings.appendChild(cursorSizeDisplay);
+
+slider.oninput = () => {
+    cursorSize = slider.value;
+    cursorSizeDisplay.textContent = `Cursor Size: ${cursorSize}px`;
+};
