@@ -3,6 +3,7 @@ let body = document.querySelector('body');
 let container = document.createElement('div');
 container.className = 'container';
 body.appendChild(container);
+body.style.cursor = 'none';
 
 container.style.width = '100vw';
 container.style.height = '100vh';
@@ -22,34 +23,31 @@ canvas.style.height = '80vh';
 canvas.style.backgroundColor = 'white';
 canvas.style.borderRadius = '20px';
 canvas.style.border = '5px solid purple';
-canvas.style.cursor = 'none';
 
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
 let cursor = document.createElement('div');
 cursor.className = 'cursor';
-canvas.appendChild(cursor);
-let cursorWidth = 20;
+container.appendChild(cursor);
+let cursorWidth = 10;
 let cursorColor = 'black';
 
 cursor.style.position = 'absolute';
-cursor.style.width = 100 + 'px';
-cursor.style.height = 100 + 'px';
+cursor.style.width = cursorWidth + 'px';
+cursor.style.height = cursorWidth + 'px';
 cursor.style.borderRadius = '50%';
 cursor.style.backgroundColor = cursorColor;
 cursor.style.pointerEvents = 'none';
-cursor.style.zIndex = 10;
+cursor.style.transform = 'translate(-35%, -35%)';
 
 let drawing = false;
 window.addEventListener('mousemove', e => {
     //moving the cursor
     let lastX = e.clientX;
     let lastY = e.clientY;
-    cursor.style.left= (lastX - cursorWidth/2) + 'px';
-    cursor.style.top= (lastY - cursorWidth/2) + 'px';
-
-    console.log(cursor.style.left, cursor.style.top);
+    cursor.style.left= (lastX) + 'px';
+    cursor.style.top= (lastY) + 'px';
 
     //drawing on the canvas
     if (!drawing) return;
