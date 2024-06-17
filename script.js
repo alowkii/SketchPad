@@ -4,6 +4,7 @@ let container = document.createElement('div');
 container.className = 'container';
 body.appendChild(container);
 body.style.cursor = 'none';
+body.style.overflow = 'hidden';
 
 container.style.width = '100vw';
 container.style.height = '100vh';
@@ -31,30 +32,29 @@ let cursor = document.createElement('div');
 cursor.className = 'cursor';
 container.appendChild(cursor);
 let cursorWidth = 10;
-let cursorColor = 'black';
+let currentColor = 'black';
 
 cursor.style.position = 'absolute';
-cursor.style.width = cursorWidth + 'px';
-cursor.style.height = cursorWidth + 'px';
 cursor.style.borderRadius = '50%';
-cursor.style.backgroundColor = cursorColor;
 cursor.style.pointerEvents = 'none';
-cursor.style.transform = 'translate(-35%, -35%)';
 
 let drawing = false;
 window.addEventListener('mousemove', e => {
     //moving the cursor
     let lastX = e.clientX;
     let lastY = e.clientY;
-    cursor.style.left= (lastX) + 'px';
-    cursor.style.top= (lastY) + 'px';
+    cursor.style.left= (lastX - cursorWidth/2) + 'px';
+    cursor.style.top= (lastY - cursorWidth/2) + 'px';
+    cursor.style.width = cursorWidth + 'px';
+    cursor.style.height = cursorWidth + 'px';
+    cursor.style.backgroundColor = currentColor;
 
     //drawing on the canvas
     if (!drawing) return;
 
     ctx.lineWidth = cursorWidth;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = cursorColor;
+    ctx.strokeStyle = currentColor;
 
     ctx.lineTo(lastX - canvas.offsetLeft, lastY - canvas.offsetTop);
     ctx.stroke();
@@ -71,7 +71,6 @@ window.addEventListener('mousemove', e => {
 
 canvas.addEventListener('mousedown', e => {
     drawing = true;
-    draw(e);
 });
 
 canvas.addEventListener('mouseup', () => {
@@ -92,3 +91,86 @@ clearBtn.style.cursor = 'pointer';
 clearBtn.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
+
+//Color Palette
+let colorPalette = document.createElement('canvas');
+colorPalette.id = 'colorPalette';
+container.appendChild(colorPalette);
+colorPalette.width = 200;
+colorPalette.height = 200;
+colorPalette.style.position = 'relative';
+colorPalette.style.backgroundColor = 'grey';
+colorPalette.style.right = '3vw';
+colorPalette.style.cursor = 'pointer';
+
+colorCtx = colorPalette.getContext("2d");
+let width = colorPalette.width;
+let height = colorPalette.height;
+let numCols = 16; // Number of columns
+let numRows = 16; // Number of rows
+let cellWidth = width / numCols;
+let cellHeight = height / numRows;
+
+for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j < numCols; j++) {
+        let red = Math.floor(255 * (j / (numCols - 1)));
+        let green = Math.floor(255 * (i / (numRows - 1)));
+        let blue = 128;
+
+        colorCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+        colorCtx.fillRect(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
+    }
+}
+
+//Black and White with Current Palette
+let bnw = document.createElement('canvas');
+bnw.id = 'blackNdWhite';
+container.appendChild(bnw)
+
+bnw.width = 200;
+bnw.height = 40;
+bnw.style.position = 'absolute';
+bnw.style.backgroundColor = 'white';
+bnw.style.right = '3vw';
+bnw.style.bottom = '25vh';
+bnw.style.border = '2px solid black';
+bnw.style.cursor = 'pointer';
+
+const bnwCtx = bnw.getContext("2d");
+let portionWidth = bnw.width / 3;
+
+bnwCtx.fillStyle = 'black';
+bnwCtx.fillRect(0,0,portionWidth, bnw.height);
+bnwCtx.fillStyle = 'white';
+bnwCtx.fillRect(portionWidth,0,portionWidth, bnw.height);
+
+function getRGB(x, y){
+    let imageData = colorCtx.getImageData(x,y,1,1);
+    let data = imageData.data;
+    
+    return `rgb(${data[0]}, ${data[1]}, ${data[2]})`
+}
+
+colorPalette.addEventListener('click', e => {
+    let rect = colorPalette.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    
+    currentColor = getRGB(x, y);
+    bnwCtx.fillStyle = `${currentColor}`;
+    bnwCtx.fillRect(2*portionWidth,0,portionWidth, bnw.height);
+});
+
+bnw.addEventListener('click', e => {
+    let rect = bnw.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+
+    if(x < portionWidth){
+        bnwCtx.fillStyle = 'black';
+        bnwCtx.fillRect(0,0,portionWidth, bnw.height);
+    }
+    if(x > portionWidth){
+        bnwCtx.fillStyle = 'white';
+        bnwCtx.fillRect(portionWidth,0,portionWidth, bnw.height);
+    }
+})
