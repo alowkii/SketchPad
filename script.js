@@ -225,7 +225,7 @@ container.appendChild(cursorSettings)
 cursorSettings.innerHTML = `Cursor Settings:`
 cursorSettings.style.width = '200px';
 cursorSettings.style.position = 'absolute';
-cursorSettings.style.color = 'grey';
+cursorSettings.style.color = '#608da2';
 cursorSettings.style.backgroundColor = 'transparent';
 cursorSettings.style.right = '3vw';
 cursorSettings.style.top = '20vh';
