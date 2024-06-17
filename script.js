@@ -18,10 +18,10 @@ header.style.left = '2vw';
 
 let footer = document.createElement('div');
 container.appendChild(footer);
-footer.style.width = '100vw';
-footer.style.height = '10vh';
+footer.style.width = '100%';
+footer.style.height = '5vh';
 footer.style.position = 'absolute';
-footer.style.bottom = '-35px';
+footer.style.bottom = '0px';
 footer.style.fontSize = '1rem';
 footer.style.left = '2vw';
 
@@ -33,7 +33,9 @@ GithubLogo.style.width = '20px';
 GithubLogo.style.height = '20px';
 GithubLogo.style.position = 'relative';
 GithubLogo.style.top = '5px';
+
 footer.appendChild(link);
+
 link.href = 'https://github.com/';
 link.textContent = `alokwkii © 2024`;
 link.style.paddingLeft = '10px';
@@ -236,6 +238,7 @@ slider.type = 'range';
 slider.min = '1';
 slider.max = '100';
 slider.value = '10';
+slider.style.accentColor = 'grey';
 slider.style.width = '200px';
 slider.style.backgroundColor = 'white';
 slider.style.border = '2px solid black';
