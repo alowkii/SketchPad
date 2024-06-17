@@ -19,6 +19,7 @@ container.appendChild(canvas);
 let ctx = canvas.getContext('2d');
 
 canvas.style.position = 'relative';
+canvas.style.left = '1vw';
 canvas.style.width = '80vw';
 canvas.style.height = '80vh';
 canvas.style.backgroundColor = 'white';
@@ -31,9 +32,10 @@ canvas.height = canvas.offsetHeight;
 let cursor = document.createElement('div');
 cursor.className = 'cursor';
 container.appendChild(cursor);
-let cursorWidth = 10;
+let cursorSize = 10;
 let currentColor = 'black';
 
+cursor.style.border = '1px solid black'
 cursor.style.position = 'absolute';
 cursor.style.borderRadius = '50%';
 cursor.style.pointerEvents = 'none';
@@ -43,16 +45,16 @@ window.addEventListener('mousemove', e => {
     //moving the cursor
     let lastX = e.clientX;
     let lastY = e.clientY;
-    cursor.style.left= (lastX - cursorWidth/2) + 'px';
-    cursor.style.top= (lastY - cursorWidth/2) + 'px';
-    cursor.style.width = cursorWidth + 'px';
-    cursor.style.height = cursorWidth + 'px';
+    cursor.style.left= (lastX - cursorSize/2) + 'px';
+    cursor.style.top= (lastY - cursorSize/2) + 'px';
+    cursor.style.width = cursorSize + 'px';
+    cursor.style.height = cursorSize + 'px';
     cursor.style.backgroundColor = currentColor;
 
     //drawing on the canvas
     if (!drawing) return;
 
-    ctx.lineWidth = cursorWidth;
+    ctx.lineWidth = cursorSize;
     ctx.lineCap = 'round';
     ctx.strokeStyle = currentColor;
 
@@ -81,10 +83,11 @@ canvas.addEventListener('mouseup', () => {
 let clearBtn = document.createElement('button');
 container.appendChild(clearBtn);
 clearBtn.textContent = 'Clear';
-clearBtn.style.width = '100px';
+clearBtn.style.width = '200px';
 clearBtn.style.height = '50px';
 clearBtn.style.borderRadius = '5px';
 clearBtn.style.position = 'relative';
+clearBtn.style.left = '4vw';
 clearBtn.style.top = '37.5vh';
 clearBtn.style.cursor = 'pointer';
 
@@ -166,11 +169,12 @@ bnw.addEventListener('click', e => {
     let x = e.clientX - rect.left;
 
     if(x < portionWidth){
-        bnwCtx.fillStyle = 'black';
-        bnwCtx.fillRect(0,0,portionWidth, bnw.height);
+        currentColor = 'black';
     }
     if(x > portionWidth){
-        bnwCtx.fillStyle = 'white';
-        bnwCtx.fillRect(portionWidth,0,portionWidth, bnw.height);
+        currentColor = 'white';
     }
+    bnwCtx.fillStyle = `${currentColor}`;
+    bnwCtx.fillRect(2*portionWidth,0,portionWidth, bnw.height);
 })
+
