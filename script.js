@@ -6,6 +6,41 @@ body.appendChild(container);
 body.style.cursor = 'none';
 body.style.overflow = 'hidden';
 
+let header = document.createElement('div');
+container.appendChild(header);
+header.innerHTML = `Sketch Pad`;
+header.style.width = '100vw';
+header.style.height = '10vh';
+header.style.position = 'absolute';
+header.style.top = '10px';
+header.style.fontSize = '2rem';
+header.style.left = '2vw';
+
+let footer = document.createElement('div');
+container.appendChild(footer);
+footer.style.width = '100vw';
+footer.style.height = '10vh';
+footer.style.position = 'absolute';
+footer.style.bottom = '-35px';
+footer.style.fontSize = '1rem';
+footer.style.left = '2vw';
+
+let link = document.createElement('a');
+let GithubLogo = document.createElement('img');
+footer.appendChild(GithubLogo);
+GithubLogo.src = 'https://cdn-icons-png.flaticon.com/512/25/25231.png';
+GithubLogo.style.width = '20px';
+GithubLogo.style.height = '20px';
+GithubLogo.style.position = 'relative';
+GithubLogo.style.top = '5px';
+footer.appendChild(link);
+link.href = 'https://github.com/';
+link.textContent = `alokwkii © 2024`;
+link.style.paddingLeft = '10px';
+link.target = '_blank';
+link.style.color = 'white';
+link.style.textDecoration = 'none';
+
 container.style.width = '100vw';
 container.style.height = '100vh';
 container.style.backgroundColor = '#1D2937';
