@@ -7,3 +7,5 @@ Bare in mind the code absolutelty doesn't use the given features of JavaScript t
 For example:
 Input tag with type field set to 'color' could have given a more absoulte value for the cursor color.
 But extensively the code is there to provide a context of how a color can be extracted from a given set of color palette.
+
+As a conclusion, it must be understood the webpage is extensively written for the purpose of demonstration of raw JavaScript.
